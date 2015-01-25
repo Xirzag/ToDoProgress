@@ -1,0 +1,118 @@
+.task{
+	margin-left:10%;
+	margin-right:10%;
+	padding:16px;
+	border-radius: 1em;
+	background: #EEEEEE;
+	height: 92px; /* 92 60+20+2*16 */
+	border: 2px solid #AAAAAA;
+	transition: all 0.5s ease-in-out;
+	color:#454545;
+	margin-bottom: 1em;
+	overflow: hidden;
+}
+.tool{
+	float: left;
+	height: 100px;
+	width: 60px;
+	text-align: center;	
+}
+.settingTool{
+	display:block;
+	/*height: 0px;*/
+	height: auto;
+	transition: all 0.5s ease-in-out;
+	/*word-break: break-all;*/
+	/*word-wrap: break-word;*/
+	opacity: 0;
+}
+.more, .less{
+	font-weight: bold;
+	border-radius: 5px;
+	display: block;
+	background: #ffffff;
+	cursor: pointer;
+	color: #AAAAAA;
+	border: 2px solid #AAAAAA;
+}
+.more:hover, .less:hover{
+	color: #888888;
+	border: 2px solid #888888;	
+}
+.more{
+	padding-top: 20px;
+	height: 40px;	
+}
+.less{
+	height: 20px;
+}
+.info .head .name{
+	font-weight: bold;
+	display: inline;
+	margin-left: 0.5em;
+}
+.info .time{
+	clear: none;
+	display: inline;
+	margin-left: 1em;
+}
+.info .head .time{
+	float: right;
+}
+.info .head .finishTime{
+	float: right;
+	clear: none;
+	display: inline;
+}
+.info .progressBar{
+	margin-left: 70px;
+	right:0px;
+	background: #333333;
+	height: 1.5em;
+	border-radius: 0.75em;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.info .progress{
+	left:0;
+	border-radius: 0.60em;
+	height: 1.5em;
+	background: #77FF44;
+	transition: all 1s;
+}
+.lastEdit{
+	display: inline;
+	margin-left: 0.5em;
+}
+.settings{
+	float:right;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+	opacity: 0.3;
+	transition: opacity 0.2s;
+}
+.settings:hover{
+	opacity: 0.5!important;
+}
+.settingTool{
+	margin-top: 20px;
+}
+.inputControl{
+	display: inline-block;
+}
+.settingTool .inputControl{
+	margin-bottom: 10px;
+	margin-right: 20px;
+}
+.inputControl input{
+	display: inline;
+}
+.btnDelete{
+	color: #FF2222 !important;
+	border-color: #FF4242 !important;
+	background-color: #FFAAAA !important;
+}
+.inputControl .btnDelete{
+	float: right;
+}

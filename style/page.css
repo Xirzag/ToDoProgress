@@ -1,0 +1,31 @@
+body{
+	margin:0;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+#taskList{
+	margin-top: 1em;
+}
+input[type='button']{
+	cursor: pointer;
+}
+#note{
+	resize: none; 
+	margin-left:10%;
+	display:block;
+	width:80%;
+	box-sizing: padding-box;
+	display:block;
+	/*box-sizing: border-box;*/
+	padding:1em;
+	border-radius: 0.5em;
+	background: #F6F6F6;
+	min-height: 92px; /* 92 60+20+2*16 */
+	height: auto;
+	overflow-y: visible;
+	border: 2px solid #B6B6B6;
+	transition: all 0.5s ease-in-out;
+	color:#454545;
+	margin-bottom: 1em;
+	overflow: hidden;
+	font-size: 20px;
+}

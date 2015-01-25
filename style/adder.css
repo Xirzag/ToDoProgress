@@ -1,0 +1,13 @@
+#taskAdder{
+	background: #EEEEEE;
+	padding: 1em 0 1em 5%;
+	color: #626262;
+	text-align: center;
+	border-bottom: 2px solid #AAAAAA;
+}
+input{
+	color: #626262;
+	border: 2px solid #AAAAAA;
+	border-radius: 5px;
+	padding: 3px;
+}
