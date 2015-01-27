@@ -4,7 +4,7 @@ if(typeof(Storage) === "undefined"){
 }else{
 	if(!localStorage.numberOfTasks) {
 		localStorage.setItem("numberOfTasks","0");
-		note.value = "Crea una nueva tarea utilizando la barra superior\nPuedes escribir tus notas en este campo";
+		note.value = "Crea una nueva tarea utilizando la barra superior \nRecuerda que la prioridad es el la cantidad de dias que puedes estar sin hacer la tarea";
 	}
 	else{
 		note.value = localStorage.getItem("note");
@@ -66,8 +66,10 @@ function taskDisplay(name,creationDate,parts,done,priority,lastModified,id){
 			' <input class="setLast" type="datetime-local" /></div><input type="button" onclick="confirmSettings('+id+
 			')" value="modificar"/><input type="button" onclick="deleteTask('+id+
 			')" class="btnDelete" value="borrar"/></div></div>\n</div>';
-	displayFinish(creationDate, parts, done, document.getElementById("task"+id));
+	var task = document.getElementById("task"+id);
+	displayFinish(creationDate, parts, done, task);
 	btnDeleteOrMore(id, done, parts);
+	displayProgressColor(task, priority, lastModified);
 }
 
 function btnDeleteOrMore(id, done, parts){
@@ -113,6 +115,39 @@ function displayFinish(createDate, parts, done, task){
 	task.getElementsByClassName("finishTime")[0].getElementsByClassName("time")[0].innerHTML = finishDate;
 }
 
+function displayProgressColor(task, priority, last){
+	var days = (new Date().getTime() - last.getTime())/86400000;
+	var priorcentage = days/priority; 
+	var color;
+	if( priorcentage < 0 ) color = "#444477";
+	else if(priorcentage <= 1) color = colorBeyond("77FF44","FF7744",priorcentage);
+	else if(priorcentage <= 2) color = colorBeyond("FF7744","FF3322",priorcentage);
+	else color = "#FF3322";
+	console.log("color "+color+" "+priorcentage);
+	task.getElementsByClassName("progress")[0].style.backgroundColor = color;
+}
+
+function colorBeyond(colorA, colorB, offset) {
+	var mixColor = "#";
+	console.log(colorA.substring(0,2)+" "+colorA.substring(2,4)+" "+colorA.substring(4,6));
+	console.log(colorB.substring(0,2)+" "+colorB.substring(2,4)+" "+colorB.substring(4,6));
+	mixColor += toneBeyond(colorA.substring(0,2), colorB.substring(0,2), offset);
+	mixColor += toneBeyond(colorA.substring(2,4), colorB.substring(2,4), offset);
+	mixColor += toneBeyond(colorA.substring(4,6), colorB.substring(4,6), offset);
+	return mixColor;
+}
+
+function toneBeyond(toneA, toneB, offset) {
+	var toneA = parseInt(toneA, 16);
+	var toneB = parseInt(toneB, 16);
+	var mixTone = Math.abs(Math.floor((toneA-toneB)*offset));
+	var mixTone = (mixTone +toneA );
+	if( mixTone >= 255 ) return "ff";
+	if( mixTone <= 0 ) return "00";
+	mixTone = mixTone.toString(16);
+	return (mixTone.length < 2)? '0'+ mixTone : mixTone;
+}
+
 function calculateProgress(done, parts){
 	return (done * 100)/parts;
 }
@@ -124,12 +159,28 @@ function displayProgress(done, parts, task){
 
 function checkRows(){
 	var rows = note.value.split("\n").length;
-	if(rows < 3) note.style.height = "92px"; 
+	if(rows < 3) note.style.height = "138px"; 
 	else note.style.height = 29*rows+"px";
 	localStorage.setItem("note", note.value);
 }
 
 checkRows();
+
+setInterval(function(){ check(); }, 30000);
+
+function check(){
+	if (document.hidden) {
+		for (var id=0; id < numberOfTasks; id++) {
+			if(localStorage.getItem("tName"+id)){
+				var task = document.getElementById("task"+id);
+				var createDate = new Date(localStorage.getItem("tDate"+id));
+				var parts = parseInt(localStorage.getItem("tPart"+id));
+				var done = parseInt(localStorage.getItem("tDone"+id));
+				displayFinish(createDate, parts, done, task);
+			}
+		}
+	}
+}
 
 function reset(){
 	localStorage.clear();

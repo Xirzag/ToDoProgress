@@ -53,7 +53,8 @@ function confirmSettings(id){
 	task.getElementsByClassName("head")[0].getElementsByClassName("name")[0].innerHTML = name;
 	task.getElementsByClassName("lastEdit")[0].getElementsByClassName("time")[0].innerHTML = last.toGMTString();
 	displayProgress(done, parts, task);
-	displayFinish(create, parts, done, task);	
+	displayFinish(create, parts, done, task);
+	displayProgressColor(task, priority, last);	
 }
 
 function dateToStr(date){
