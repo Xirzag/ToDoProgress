@@ -14,8 +14,18 @@
 			Prioridad <input id="addPriority" type="number" />
 			Partes <input id="addParts" type="number" />
 			<input type="button" value="A&ntilde;adir" onclick="taskAdd()"/>
+			<img id="export" src="img/export.png" onclick="showExportTab(true)"/>
 		</div>
 		<div id="taskList">
+		</div>
+		<div id="exportTab">
+			<p>
+				<div class="close" onclick="showExportTab(false)">x</div>
+				<a class="button" id="linkExport" href="#" download="task.todo" onmouseenter="exportTasks()">Exportar</a>
+				<input id="linkImport" onchange="importTasks()" type="file" id="files" name="files[]" multiple />
+				<a id="linkImportBtn" class="button">Importar</a>
+				<label for="importCheck"><input id="importCheck" checked="true" type="checkbox">A&ntilde;adir a las tareas actuales</label>
+			</p>
 		</div>
 		<textarea onblur="checkRows()" id="note"> </textarea>
 		<script type="text/javascript" src="scripts/setting.js"></script>

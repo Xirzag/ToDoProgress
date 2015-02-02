@@ -29,3 +29,58 @@ input[type='button']{
 	overflow: hidden;
 	font-size: 20px;
 }
+#export{
+	opacity: 0.4;
+	transform: translateY(0.2em);
+	width: 1em;
+	cursor: pointer;
+}
+#export:hover{
+	opacity: 0.6;
+}
+#exportTab{
+	bottom: auto;
+	left: 0;
+	right: 0;
+	position: fixed;
+	z-index: 10;
+	top: 100%;
+	background-color: #EEEEEE;
+	border: 2px solid #AAAAAA;
+	padding: 0 2em 0 2em;
+	transition: all 0.5s;
+}
+#exportTab .close{
+	float: right;
+	color: #626262;
+	cursor: pointer;
+	font-size: 1.4em;
+	font-weight: bold;
+}
+#exportTab .close:hover{
+	color: #333333;
+}
+#exportTab .button{
+	border: 2px solid #AAAAAA;
+	border-radius: 0.4em;
+	padding: 0.4em;
+	font-style: normal;
+	text-decoration: none;
+	color: #626262;
+	cursor: pointer;
+	background-color: #FFFFFF;
+}
+
+#linkImport{
+	z-index:12;
+	width: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+#exportTab .button:hover{
+	border: 2px solid #888888;
+	color: #454545;
+}
+#exportTab label{
+	color:#454545;
+}

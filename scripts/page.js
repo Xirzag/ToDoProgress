@@ -25,6 +25,17 @@ if(typeof(Storage) === "undefined"){
 	}
 }
 
+function taskAddFromParam(name, date, parts, done, priority, last){
+	localStorage.setItem("tName"+numberOfTasks, name);
+	localStorage.setItem("tDone"+numberOfTasks, done);
+	localStorage.setItem("tDate"+numberOfTasks, date);
+	localStorage.setItem("tPart"+numberOfTasks, parts);
+	localStorage.setItem("tPrio"+numberOfTasks, priority);
+	localStorage.setItem("tLast"+numberOfTasks, last);
+	taskDisplay(name,new Date(date),parseInt(parts),parseInt(done),parseInt(priority),new Date(last),numberOfTasks);
+	localStorage.setItem("numberOfTasks", (++numberOfTasks).toString());
+}
+
 function taskAdd(){
 	var numberOfTasks = parseInt(localStorage.getItem("numberOfTasks"));
 	var name = document.getElementById("addName").value;
@@ -45,6 +56,7 @@ function taskAdd(){
 }
 
 function taskDisplay(name,creationDate,parts,done,priority,lastModified,id){
+	console.log(name+" "+creationDate+" "+parts+" "+done+" "+priority+" "+lastModified+" "+id)
 	var taskList = document.getElementById("taskList");
 	var progress = calculateProgress(done, parts);
 	var finishDate;
@@ -92,14 +104,21 @@ function taskPartComplete(amount, id){
 	}else if(done >= 0) {
 		btnDeleteOrMore(id, done, parts);
 		localStorage.setItem( "tDone"+id, done.toString() );
+		var priority = parseInt(localStorage.getItem("tPrio"+id));
+		var last = new Date(localStorage.getItem("tLast"+id));
 		
 		var task = document.getElementById("task"+id);
 		displayProgress(done, parts, task);
-		task.getElementsByClassName("lastEdit")[0].getElementsByClassName("time")[0].innerHTML = new Date().toGMTString();
+		displayProgressColor(task, priority, last);
+		
 		
 		var createDate = new Date(localStorage.getItem("tDate"+id));
 		displayFinish(createDate, parts, done, task);
-		localStorage.setItem( "tLast"+id, new Date().toString() );
+		console.log(amount>0);
+		if(amount>0) {
+			localStorage.setItem( "tLast"+id, new Date().toString() );
+			task.getElementsByClassName("lastEdit")[0].getElementsByClassName("time")[0].innerHTML = new Date().toGMTString();
+		}
 	}
 }
 
@@ -182,7 +201,95 @@ function check(){
 	}
 }
 
-function reset(){
-	localStorage.clear();
+function exportTasks(){
+	note.value = localStorage.getItem("note");
+	var output="Version 0\n";
+	for (var i=0; i < numberOfTasks; i++) {
+		if(localStorage.getItem("tName"+i)){
+			output += "Task\n";
+			output += localStorage.getItem("tName"+i)+"\n";
+			output += localStorage.getItem("tDate"+i)+"\n";
+			output += localStorage.getItem("tPart"+i)+"\n";
+			output += localStorage.getItem("tDone"+i)+"\n";
+			output += localStorage.getItem("tPrio"+i)+"\n";
+			output += localStorage.getItem("tLast"+i)+"\n";
+		}
+	};
+	output += "Note\n" + localStorage.getItem("note");
+	var link = document.getElementById("linkExport");
+	link.href='data:text/plain;charset=utf-8,' + encodeURIComponent(output);
 }
 
+function showExportTab(show){
+	var tab = document.getElementById("exportTab");
+	console.log(tab.offsetHeight);
+	if(show){
+		tab.style.top = window.innerHeight-tab.offsetHeight+"px";
+		tab.style.bottom = "0px";
+	}else{
+		tab.style.top = "100%";
+		setTimeout(function(){tab.style.bottom = "auto";},500);
+	}	
+}
+
+function importTasks(){
+	if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+  		alert('Tu navegador no soporta FileReader, por lo que no es posible importar las tareas');
+  		return;
+	}
+	if(!document.getElementById("importCheck").checked 
+		&& confirm("Realmente desea borrar las tareas antiguas?")) reset();
+		
+	var files = document.getElementById("linkImport").files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+
+    for (var i = 0, f; f = files[i]; i++) {
+      var reader = new FileReader();
+      reader.onload = (function(file) {
+      	var content = reader.result.split('\n');
+      	for(var i=1; i < content.length; i+=7){
+      		console.log("i: "+i+"  content[i]: "+content[i]);
+      		if(content[i]=="Note") {
+      			for(i++; i < content.length; i++){
+      				note.value += content[i]+"\n";	
+      			}
+      			break;
+      		}
+      		if(content[i]!="Task") return alert("Error en el archivo! task");
+      		try{
+	      		taskAddFromParam(
+	      			content[i+1],
+	      			content[i+2],
+	      			content[i+3],
+	      			content[i+4],
+	      			content[i+5],
+	      			content[i+6]
+	      		);
+      		}catch(e){
+      			console.error(e);
+      			alert("Error en el archivo!");
+      			return;
+      		}
+      	}
+      });
+      reader.readAsBinaryString(f);
+    }
+}
+
+function reset(){
+	document.getElementById("taskList").innerHTML = "";
+	note.value = "";
+	localStorage.clear();
+	localStorage.setItem("numberOfTasks","0");
+}
+
+//OnLoad()
+function inputFileStyle(){
+	var inputFile = document.getElementById("linkImport").style;
+	var inputFileBtn = document.getElementById("linkImportBtn");
+	inputFile.width = inputFileBtn.offsetWidth+"px";
+	console.log(inputFileBtn.offsetWidth);
+	inputFile.transform = "translateX("+ inputFileBtn.offsetWidth +"px)";
+}
+inputFileStyle();

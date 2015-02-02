@@ -85,7 +85,7 @@ function supportsDateInput() { //No funciona ¬¬
 
 function deleteTask(id){
 	var task = document.getElementById("task"+id);
-	if(!confirm("¿Desea borrar "+task.getElementsByClassName("name")[0].innerHTML+"?")) return;
+	if(!confirm("Desea borrar "+task.getElementsByClassName("name")[0].innerHTML+"?")) return;
 	
 	var task = document.getElementById("task"+id);
 	task.style.height = "0px";
