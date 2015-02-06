@@ -109,14 +109,14 @@ function taskPartComplete(amount, id){
 		
 		var task = document.getElementById("task"+id);
 		displayProgress(done, parts, task);
-		displayProgressColor(task, priority, last);
-		
+				
 		
 		var createDate = new Date(localStorage.getItem("tDate"+id));
 		displayFinish(createDate, parts, done, task);
 		console.log(amount>0);
 		if(amount>0) {
 			localStorage.setItem( "tLast"+id, new Date().toString() );
+			displayProgressColor(task, priority, new Date().toString());
 			task.getElementsByClassName("lastEdit")[0].getElementsByClassName("time")[0].innerHTML = new Date().toGMTString();
 		}
 	}
