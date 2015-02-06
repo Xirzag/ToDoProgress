@@ -56,7 +56,7 @@ function taskAdd(){
 }
 
 function taskDisplay(name,creationDate,parts,done,priority,lastModified,id){
-	console.log(name+" "+creationDate+" "+parts+" "+done+" "+priority+" "+lastModified+" "+id)
+	//console.log(name+" "+creationDate+" "+parts+" "+done+" "+priority+" "+lastModified+" "+id)
 	var taskList = document.getElementById("taskList");
 	var progress = calculateProgress(done, parts);
 	var finishDate;
@@ -113,10 +113,10 @@ function taskPartComplete(amount, id){
 		
 		var createDate = new Date(localStorage.getItem("tDate"+id));
 		displayFinish(createDate, parts, done, task);
-		console.log(amount>0);
+		//console.log(amount>0);
 		if(amount>0) {
 			localStorage.setItem( "tLast"+id, new Date().toString() );
-			displayProgressColor(task, priority, new Date().toString());
+			displayProgressColor(task, priority, new Date());
 			task.getElementsByClassName("lastEdit")[0].getElementsByClassName("time")[0].innerHTML = new Date().toGMTString();
 		}
 	}
@@ -142,14 +142,14 @@ function displayProgressColor(task, priority, last){
 	else if(priorcentage <= 1) color = colorBeyond("77FF44","FF7744",priorcentage);
 	else if(priorcentage <= 2) color = colorBeyond("FF7744","FF3322",priorcentage);
 	else color = "#FF3322";
-	console.log("color "+color+" "+priorcentage);
+	//console.log("color "+color+" "+priorcentage);
 	task.getElementsByClassName("progress")[0].style.backgroundColor = color;
 }
 
 function colorBeyond(colorA, colorB, offset) {
 	var mixColor = "#";
-	console.log(colorA.substring(0,2)+" "+colorA.substring(2,4)+" "+colorA.substring(4,6));
-	console.log(colorB.substring(0,2)+" "+colorB.substring(2,4)+" "+colorB.substring(4,6));
+	//console.log(colorA.substring(0,2)+" "+colorA.substring(2,4)+" "+colorA.substring(4,6));
+	//console.log(colorB.substring(0,2)+" "+colorB.substring(2,4)+" "+colorB.substring(4,6));
 	mixColor += toneBeyond(colorA.substring(0,2), colorB.substring(0,2), offset);
 	mixColor += toneBeyond(colorA.substring(2,4), colorB.substring(2,4), offset);
 	mixColor += toneBeyond(colorA.substring(4,6), colorB.substring(4,6), offset);
@@ -222,7 +222,7 @@ function exportTasks(){
 
 function showExportTab(show){
 	var tab = document.getElementById("exportTab");
-	console.log(tab.offsetHeight);
+	//console.log(tab.offsetHeight);
 	if(show){
 		tab.style.top = window.innerHeight-tab.offsetHeight+"px";
 		tab.style.bottom = "0px";
@@ -249,7 +249,7 @@ function importTasks(){
       reader.onload = (function(file) {
       	var content = reader.result.split('\n');
       	for(var i=1; i < content.length; i+=7){
-      		console.log("i: "+i+"  content[i]: "+content[i]);
+      		//console.log("i: "+i+"  content[i]: "+content[i]);
       		if(content[i]=="Note") {
       			for(i++; i < content.length; i++){
       				note.value += content[i]+"\n";	
@@ -267,7 +267,7 @@ function importTasks(){
 	      			content[i+6]
 	      		);
       		}catch(e){
-      			console.error(e);
+      			//console.error(e);
       			alert("Error en el archivo!");
       			return;
       		}
@@ -289,7 +289,7 @@ function inputFileStyle(){
 	var inputFile = document.getElementById("linkImport").style;
 	var inputFileBtn = document.getElementById("linkImportBtn");
 	inputFile.width = inputFileBtn.offsetWidth+"px";
-	console.log(inputFileBtn.offsetWidth);
+	//console.log(inputFileBtn.offsetWidth);
 	inputFile.transform = "translateX("+ inputFileBtn.offsetWidth +"px)";
 }
 inputFileStyle();

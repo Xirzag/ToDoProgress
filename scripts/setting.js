@@ -42,7 +42,7 @@ function confirmSettings(id){
 	var parts = setting.getElementsByClassName("setParts")[0].value;
 	var done = setting.getElementsByClassName("setDone")[0].value;
 	var create = new Date(setting.getElementsByClassName("setCreate")[0].value);
-	console.log(create+" "+setting.getElementsByClassName("setCreate")[0].value);
+	//console.log(create+" "+setting.getElementsByClassName("setCreate")[0].value);
 	var last = new Date(setting.getElementsByClassName("setLast")[0].value);
 	localStorage.setItem("tName"+id, name);
 	localStorage.setItem("tPrio"+id, priority);
@@ -62,7 +62,7 @@ function dateToStr(date){
 		//2014-11-16T15:25:33
 		var output=date.getFullYear()+'-'+fd((date.getMonth())+1)+'-'+fd(date.getDay());
 		output += 'T'+fd(date.getHours())+':'+fd(date.getMinutes())+':'+fd(date.getSeconds());
-		console.log(output);
+		//console.log(output);
 		return output;
 	}else{
 		//var options = { hour: "numeric", minute: "2-digit", second: "2-digit" };
