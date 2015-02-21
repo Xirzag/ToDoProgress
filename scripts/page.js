@@ -178,8 +178,8 @@ function displayProgress(done, parts, task){
 
 function checkRows(){
 	var rows = note.value.split("\n").length;
-	if(rows < 3) note.style.height = "138px"; 
-	else note.style.height = 29*rows+"px";
+	if(rows < 4) note.style.height = "138px"; 
+	else note.style.height = 25*(rows+1)+10+"px";
 	localStorage.setItem("note", note.value);
 }
 
@@ -199,6 +199,14 @@ function check(){
 			}
 		}
 	}
+}
+
+function pageScroll(amount) {
+	console.log("moviendo camara "+window.scrollY);
+	window.scroll(0,window.scrollY+amount);
+	if(window.scrollY > note.offsetTop + note.offsetHeight+26) return;
+	scrolldelay = setTimeout('pageScroll('+(amount+3)+')',10);
+	console.log("yeah");
 }
 
 function exportTasks(){
