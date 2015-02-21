@@ -27,7 +27,7 @@
 				<label for="importCheck"><input id="importCheck" checked="true" type="checkbox">A&ntilde;adir a las tareas actuales</label>
 			</p>
 		</div>
-		<textarea onblur="checkRows()" id="note"> </textarea>
+		<textarea spellCheck="false" onfocus="noteSpell(true)" onkeyup="checkRows();pageScroll(3);" onblur="checkRows();noteSpell(false)" id="note"> </textarea>
 		<script type="text/javascript" src="scripts/setting.js"></script>
 		<script type="text/javascript" src="scripts/page.js"></script>
 	</body>

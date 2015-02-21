@@ -202,11 +202,18 @@ function check(){
 }
 
 function pageScroll(amount) {
-	console.log("moviendo camara "+window.scrollY);
-	window.scroll(0,window.scrollY+amount);
-	if(window.scrollY > note.offsetTop + note.offsetHeight+26) return;
-	scrolldelay = setTimeout('pageScroll('+(amount+3)+')',10);
-	console.log("yeah");
+	console.log("ultimo trozo"+note.value.charAt(note.value.length-1));
+	if(note.value.charAt(note.value.length-1)=='\n'){
+		console.log("moviendo camara "+window.scrollY+" "+(parseInt(note.offsetTop) + parseInt(note.offsetHeight)-window.innerHeight));
+		window.scroll(0,window.scrollY+amount);
+		if(window.scrollY > parseInt(note.offsetTop) + parseInt(note.offsetHeight)-window.innerHeight) return;
+		scrolldelay = setTimeout('pageScroll('+(amount+3)+')',10);
+		console.log("yeah");
+	}
+}
+
+function noteSpell(check){
+	note.spellcheck = check;
 }
 
 function exportTasks(){
